@@ -1,3 +1,4 @@
+# not_blank Function V1
 # Define function
 def not_blank(question):
     valid = False
@@ -15,3 +16,4 @@ def not_blank(question):
 # Run the function
 
 name = not_blank("Please enter your name: ")
+print("Hello, {}".format(name))
