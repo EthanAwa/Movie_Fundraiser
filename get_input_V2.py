@@ -1,9 +1,12 @@
 # get_input_V2 function
+
+# Variables
 name = ""
 count = 0
 max_tickets = 5
 
-while name != "quit" and count < max_tickets:
+# Looping code
+while name != "quit" and count < max_tickets: # If the user doesn't enter quit and tickets sold < 5, continue looping
     print("There are {} seats left".format(max_tickets - count))
 
     # Get user's name
