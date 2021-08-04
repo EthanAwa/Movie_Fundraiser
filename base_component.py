@@ -31,7 +31,7 @@ def int_check(question):
 
         except ValueError:
             print("Please enter a whole number only, not a decimal (e.g 3.0) "
-                  "or a word (e.g Three)\n")
+                  "or a word (e.g Three)")
 
 
 # Variables
