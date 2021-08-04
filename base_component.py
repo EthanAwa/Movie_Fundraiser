@@ -54,24 +54,24 @@ while loop:
         # Ask for name (can't be blank)
         name = not_blank("Please enter your name or type quit to stop booking seats: ",
                          "Please enter your name or quit, this can't be blank.\n")
-    if name == "quit":
-        loop = False
-        break
-    # Ask for age (12 - 130)
+        if name == "quit":
+            loop = False
+            break
+        # Ask for age (12 - 130)
 
-    age = int_check("How old are you? ")
+        age = int_check("How old are you? ")
 
-    if age < 12:
-        print("You are too young for this movie, sorry\n")
-    elif age > 130:
-        print("Are you sure that you're {} years old? That looks like a mistake.\n".format(age))
-    else:
-        print("Here's your ticket, enjoy the movie\n")
-        count += 1
+        if age < 12:
+            print("You are too young for this movie, sorry")
+        elif age > 130:
+            print("Are you sure that you're {} years old? That looks like a mistake.".format(age))
+        else:
+            print("Here's your ticket, enjoy the movie")
+            count += 1
 
-    print("There are {} seats left\n".format(max_tickets - count))
+        print("There are {} seats left\n".format(max_tickets - count))
 
-    # Added to see when the loop has ended, will change places as code develops
+        # Added to see when the loop has ended, will change places as code develops
 if count == max_tickets:
     print("All tickets have been sold, there are no more seats available")
 else:
