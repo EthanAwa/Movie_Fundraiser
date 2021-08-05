@@ -65,18 +65,19 @@ while loop:
 
         if age < 12:
             print("You are too young for this movie, sorry")
+            continue
         elif age > 130:
             print("Are you sure that you're {} years old? That looks like a mistake.".format(age))
+            continue
+
+        if age < 16:
+            ticket_price = 7.50
+
+        elif age >= 65:
+            ticket_price = 6.50
+
         else:
-
-            if age < 16:
-                ticket_price = 7.50
-
-            elif age >= 65:
-                ticket_price = 6.50
-
-            else:
-                ticket_price = 10.50
+            ticket_price = 10.50
 
             print("That'll be ${:.2f} total".format(ticket_price))
             print("Here's your ticket, enjoy the movie")
