@@ -36,7 +36,9 @@ def int_check(question):
 
 # Variables
 name = ""
-count = 0
+tickets_sold = 0
+ticket_price = 0
+profit = 0
 max_tickets = 5  # Will be 150 for final version
 loop = True
 # Main Routine
@@ -49,7 +51,7 @@ loop = True
 
 while loop:
 
-    while name != "quit" and count < max_tickets:
+    while name != "quit" and tickets_sold < max_tickets:
 
         # Ask for name (can't be blank)
         name = not_blank("Please enter your name or type quit to stop booking seats: ",
@@ -66,17 +68,30 @@ while loop:
         elif age > 130:
             print("Are you sure that you're {} years old? That looks like a mistake.".format(age))
         else:
-            print("Here's your ticket, enjoy the movie")
-            count += 1
 
-        print("There are {} seats left\n".format(max_tickets - count))
+            if age < 16:
+                ticket_price = 7.50
+
+            elif age >= 65:
+                ticket_price = 6.50
+
+            else:
+                ticket_price = 10.50
+
+            print("That'll be ${:.2f} total".format(ticket_price))
+            print("Here's your ticket, enjoy the movie")
+            tickets_sold += 1
+            profit += ticket_price - 5
+
+        print("There are {} seats left\n".format(max_tickets - tickets_sold))
 
         # Added to see when the loop has ended, will change places as code develops
-if count == max_tickets:
+if tickets_sold == max_tickets:
     print("All tickets have been sold, there are no more seats available")
+    print("The total profit earned is ${:.2f}".format(profit))
 else:
-    print("{} tickets have been sold, there are {} seats available".format(count, max_tickets - count))
-
+    print("{} tickets have been sold, there are {} seats available".format(tickets_sold, max_tickets - tickets_sold))
+    print("The total profit earned is ${:.2f}".format(profit))
 
     # Calculate ticket prices
 
