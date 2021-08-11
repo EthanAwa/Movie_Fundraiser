@@ -16,7 +16,7 @@ def string_checker(question, options):
 
 loop = True
 while loop:
-    snack_check = yes_no_checker("Do you want to buy snacks? Type \"yes\" or \"no\""
+    snack_check = string_checker("Do you want to buy snacks? Type \"yes\" or \"no\""
                                  "(No quotes, y/n also work): ", ["yes", "no", "quit"])
     if snack_check == "yes" or snack_check == "y":
         print("Ok, what would you like to order: ")
