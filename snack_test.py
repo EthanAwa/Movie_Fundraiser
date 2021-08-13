@@ -7,6 +7,8 @@ def string_checker(question, options):
 
         if response in options:
             return response
+        elif response == "quit":
+            return response
         else:
             for item in options:
                 if response == item[0]:
@@ -39,9 +41,7 @@ price = 0.00
 loop = True
 
 # mock up of snacks
-snacks = ["popcorn", "m&m", "pc", "oj", "water", "quit"]
-# Quit is here to allow for the user to quit ordering snacks. Weird bug that I'll eventually fix.
-
+snacks = ["popcorn", "m&m", "pc", "oj", "water"]
 prices = [2.50, 3, 4.50, 3.25, 2]
 snack_list = ["popcorn", "m&ms", "pita chips", "orange juice", "water"]
 
@@ -53,7 +53,7 @@ print("We have popcorn, m&ms, pita chips, orange juice, and water for sale. \nPl
 
 while loop:
 
-    choice = string_checker("What snack would you like (options are popcorn, m&m, pc, oj, and water): ", snacks)
+    choice = string_checker("What snack would you like? (options are popcorn, m&m, pc, oj, and water): ", snacks)
 
     if choice == "quit":
         print("Thank you for purchasing snacks, enjoy the movie")

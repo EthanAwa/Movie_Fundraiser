@@ -7,6 +7,8 @@ def string_checker(question, options):
 
         if response in options:
             return response
+        elif response == "quit":
+            return response
         else:
             for item in options:
                 if response == item[0]:
