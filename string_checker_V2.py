@@ -7,12 +7,15 @@ def string_checker(question, options):
 
         if response in options:
             return response
+        elif response == "quit":
+            return response
         else:
             for item in options:
                 if response == item[0]:
                     return item
 
         print("Sorry, that isn't a valid response.")
+
 
 loop = True
 while loop:
@@ -22,6 +25,8 @@ while loop:
         print("Ok, what would you like to order: ")
     elif snack_check == "no" or snack_check == "n":
         print("Ok, fair enough")
+        loop = False
+        break
     elif snack_check == "quit":
         loop = False
         break
