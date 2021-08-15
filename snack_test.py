@@ -7,6 +7,8 @@ def string_checker(question, options):
 
         if response in options:
             return response
+        elif response == "quit":
+            return response
         else:
             for item in options:
                 if response == item[0]:
@@ -36,21 +38,36 @@ def int_check(question):
 
 
 price = 0.00
+loop = True
 
 # mock up of snacks
-snacks = {"popcorn": 2.50, "m&m": 3.00, "pc": 4.50, "oj": 3.25, "water": 2.00}
+snacks = ["popcorn", "m&m", "pc", "oj", "water"]
+prices = [2.50, 3, 4.50, 3.25, 2]
 snack_list = ["popcorn", "m&ms", "pita chips", "orange juice", "water"]
 
-loop = True
+# Starting message, loops if in the while loop
+print("We have popcorn, m&ms, pita chips, orange juice, and water for sale. \nPlease enter what one you would "
+      "like based on the options list. \nYou can also choose not to stop ordering snacks by typing quit at the "
+      "snack selection area, or no at the very start.\n")
+
+
 while loop:
-    print("We have popcorn, m&ms, pita chips, orange juice, and water for sale. Please enter what one you would like "
-          "based on the options list")
-    choice = string_checker("snack (options are popcorn, m&m, pc, oj, and water): ", snacks.keys())
-    amount = int_check("How many would you like (maximum of 4): ")
 
-    if amount > 4:
-        print("You can only buy up to 4 snacks at a time, sorry ")
+    choice = string_checker("What snack would you like? (options are popcorn, m&m, pc, oj, and water): ", snacks)
+
+    if choice == "quit":
+        print("Thank you for purchasing snacks, enjoy the movie")
+        loop = False
+        break
+
     else:
-        price = snacks[choice] * amount
+        amount = int_check("How many would you like (maximum of 4): ")
 
-    print("You ordered: {} x {}")
+        if amount > 4:
+            print("You can only buy up to 4 snacks at a time, sorry \n")
+        else:
+            if choice in snacks:
+                item = snacks.index(choice)
+                price = prices[item] * amount
+
+                print("\nYou ordered: {} x {}. That costs ${:.2f}\n".format(amount, snack_list[item], price))
