@@ -70,6 +70,8 @@ while loop:
             print("Are you sure that you're {} years old? That looks like a mistake.".format(age))
             continue
 
+        # Calculate ticket prices
+
         if age < 16:
             ticket_price = 7.50
 
@@ -94,7 +96,6 @@ else:
     print("{} tickets have been sold, there are {} seats available".format(tickets_sold, max_tickets - tickets_sold))
     print("The total profit earned is ${:.2f}".format(profit))
 
-    # Calculate ticket prices
 
     # Loop to ask for snacks
 
