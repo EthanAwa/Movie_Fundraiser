@@ -142,10 +142,21 @@ def get_ticket_price():
 name = ""
 tickets_sold = 0
 ticket_price = 0
-profit = 0
+ticket_sales = 0
+profit = 0.0
 max_tickets = 5  # Will be 150 for final version
 loop = True
 snack_order = []
+
+# For data-frame
+all_names = []
+all_tickets = []
+
+# Data Frame Dictionary
+movie_data_dict = {
+    'Name': all_names,
+    'Ticket': all_tickets
+}
 
 # Main Routine
 
@@ -155,42 +166,50 @@ snack_order = []
 
 # Loop code for ticket details
 
-while loop:
+while name != "quit" and tickets_sold < max_tickets:
     seats = check_tickets(tickets_sold, max_tickets)
 
-    while name != "quit":
+    name = not_blank("Please enter your name or type quit to stop booking seats: ",
+                     "Please enter your name or quit, this can't be blank.\n")
 
-        if seats:
-            # Ask for name (can't be blank)
-            name = not_blank("Please enter your name or type quit to stop booking seats: ",
-                             "Please enter your name or quit, this can't be blank.\n")
+    # End loop if exit code is entered
+    if name == "quit":
+        break
 
-            if name == "quit":
-                loop = False
-                break
+    # Work out ticket price based on ago
+    ticket_price = get_ticket_price()
 
-            else:
-                ticket_price = get_ticket_price()
-                if ticket_price == "invalid age":
-                    continue
+    if ticket_price == "invalid age":
+        continue
 
-                print("That'll be ${:.2f} total\n".format(ticket_price))
-                print("Here's your ticket, enjoy the movie\n")
-                tickets_sold += 1
-                profit += ticket_price - 5
+    tickets_sold += 1
+    ticket_sales += ticket_price
+    print()
 
-            seats = check_tickets(tickets_sold, max_tickets)
-        else:
-            print("Profit: ${:.2sf}".format(profit))
-            loop = False
-            break
-        # Added to see when the loop has ended, will change places as code develops
+    # Add name and ticket price to lists
+    all_names.append(name)
+    all_tickets.append(ticket_price)
+
     # Loop to ask for snacks
 
     # Calculate snack prices
 
     # Ask for payment (apply 5% surcharge if credit card)
 
-# Calculate total ticket and snack cost
+# End of loop
 
-# Save to a text / csv file
+# Print ticket details
+movie_frame = pandas.DataFrame(movie_data_dict)
+print(movie_frame)
+
+# Calculate ticket profit
+profit = ticket_sales - (5 * tickets_sold)
+print("Ticket profit: ${:.2f}".format(profit))
+
+# Tell user if all tickets have been sold
+if tickets_sold == max_tickets:
+    print("You have sold all available tickets")
+else:
+    print("You have sold {} tickets".format(tickets_sold))
+    print("{} seat(s) remain".format(max_tickets - tickets_sold))
+
