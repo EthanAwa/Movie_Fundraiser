@@ -158,6 +158,13 @@ movie_data_dict = {
     'Ticket': all_tickets
 }
 
+# List for valid yes/no responses
+yes_no = [
+    ["yes", "y"],
+    ["no", "n"],
+    ["quit", "q"]
+]
+
 # Main Routine
 
 # Set up dictionaries / lists
@@ -184,18 +191,38 @@ while name != "quit" and tickets_sold < max_tickets:
 
     tickets_sold += 1
     ticket_sales += ticket_price
-    print()
 
     # Add name and ticket price to lists
     all_names.append(name)
     all_tickets.append(ticket_price)
 
     # Loop to ask for snacks
+    check_snack = "invalid choice"
+    while check_snack == "invalid choice":
+        want_snack = input("Do you want to order snacks? ").lower()
+        check_snack = string_check(want_snack, yes_no)
 
+    if check_snack == "Yes":
+        order = get_snack()
+
+    else:
+        order = []
+
+    # Show order
+    if len(order) == 0:
+        print("Snacks Ordered: None")
+        print("Enjoy the movie")
+    else:
+        print("Snacks Ordered:")
+        #
+        # '''for item in order:
+        #     print(item)
+        # '''
+        print(order)
     # Calculate snack prices
 
     # Ask for payment (apply 5% surcharge if credit card)
-
+    print()
 # End of loop
 
 # Print ticket details
