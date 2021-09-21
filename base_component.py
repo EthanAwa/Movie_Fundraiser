@@ -245,6 +245,7 @@ while name != "quit" and tickets_sold < max_tickets:
     # Ask for payment (apply 5% surcharge if credit card)
     print()
 
+# Check for number of snacks
 for client_order in all_orders:
     # Assume no snacks have been ordered
     for item in snack_lists:
