@@ -158,6 +158,7 @@ mms = []
 pita_chips = []
 water = []
 orange_juice = []
+surcharge = []
 
 snack_lists = [popcorn, mms, pita_chips, water, orange_juice]
 
@@ -169,7 +170,8 @@ movie_data_dict = {
     'Water': water,
     "Pita Chips": pita_chips,
     'M&Ms': mms,
-    'Orange Juice': orange_juice
+    'Orange Juice': orange_juice,
+    'Surcharge Multi': surcharge
 }
 
 price_dict = {
@@ -185,6 +187,12 @@ yes_no = [
     ["yes", "y"],
     ["no", "n"],
     ["quit", "q"]
+]
+
+# Payment methods
+pay_method = [
+    ["credit", "cr"],
+    ["cash", "ca"]
 ]
 
 # Main Routine
@@ -242,7 +250,19 @@ while name != "quit" and tickets_sold < max_tickets:
 
     # Calculate snack prices
 
-    # Ask for payment (apply 5% surcharge if credit card)
+    # Ask for payment (apply 5% surcharge_mult if credit card)
+    how_pay = "invalid choice"
+    while how_pay == "invalid choice":
+        how_pay = input("Please choose a payment method (cash or credit): ").lower()
+        how_pay = string_check(how_pay, pay_method)
+
+    if how_pay == "credit":
+        surcharge_multi = 0.05
+    else:
+        surcharge_multi = 0
+
+    surcharge.append(surcharge_multi)
+
     print()
 
 # Check for number of snacks
@@ -275,14 +295,32 @@ movie_frame["Sub Total"] = \
     movie_frame["M&Ms"] * price_dict["M&Ms"] + \
     movie_frame["Orange Juice"] * price_dict["Orange Juice"]
 
+movie_frame["Surcharge"] = \
+    movie_frame["Sub Total"] * movie_frame["Surcharge Multi"]
+
+movie_frame["Total"] = movie_frame["Sub Total"] + \
+    movie_frame["Surcharge"]
+
 movie_frame = movie_frame.rename(columns={'Orange Juice': "OJ",
                                           'Pita Chips': "Chips"})
 
-print(movie_frame)
+# Change pandas settings
+pandas.set_option('display.max_columns', None)
+pandas.set_option('precision', 2)
+
+# Ask user if they wish to see extra info
+print_all = input("Print all columns? (y) for yes: ")
+if print_all == "y":
+    print(movie_frame)
+else:
+    print(movie_frame[['Ticket', 'Sub Total', 'Surcharge', 'Total']])
+
+print()
 
 # Calculate ticket profit
 profit = ticket_sales - (5 * tickets_sold)
 print("Ticket profit: ${:.2f}".format(profit))
+
 
 # Tell user if all tickets have been sold
 if tickets_sold == max_tickets:
