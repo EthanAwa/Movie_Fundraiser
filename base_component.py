@@ -61,7 +61,7 @@ def get_snack():
         ["Popcorn", "p", "corn"],
         ["M&Ms", "mms", "m&ms", "m"],
         ["Pita Chips", "chips", "pc", "c"],
-        ["Water", "w"],
+        ["Water", "water", "w"],
         ["Orange Juice", "oj", "juice"],
     ]
     snack_order = []
@@ -256,6 +256,7 @@ while name != "quit" and tickets_sold < max_tickets:
         how_pay = input("Please choose a payment method (cash or credit): ").lower()
         how_pay = string_check(how_pay, pay_method)
 
+    how_pay = how_pay.lower()
     if how_pay == "credit":
         surcharge_multi = 0.05
     else:
@@ -299,7 +300,7 @@ movie_frame["Surcharge"] = \
     movie_frame["Sub Total"] * movie_frame["Surcharge Multi"]
 
 movie_frame["Total"] = movie_frame["Sub Total"] + \
-    movie_frame["Surcharge"]
+                       movie_frame["Surcharge"]
 
 movie_frame = movie_frame.rename(columns={'Orange Juice': "OJ",
                                           'Pita Chips': "Chips"})
@@ -321,11 +322,9 @@ print()
 profit = ticket_sales - (5 * tickets_sold)
 print("Ticket profit: ${:.2f}".format(profit))
 
-
 # Tell user if all tickets have been sold
 if tickets_sold == max_tickets:
     print("You have sold all available tickets")
 else:
     print("You have sold {} tickets".format(tickets_sold))
-    print("{} seat(s) remain".format(max_tickets - tickets_sold))
-
+    print("{} seats remaining".format(max_tickets - tickets_sold))

@@ -30,8 +30,8 @@ while name != "quit":
         how_pay = string_check(how_pay, pay_method)
 
     subtotal = float(input("Sub total: $"))
-
-    if how_pay == "credit":
+    how_pay = how_pay.lower()
+    if how_pay == "credit" or how_pay == "cr":
         surcharge = 0.05 * subtotal
     else:
         surcharge = 0
