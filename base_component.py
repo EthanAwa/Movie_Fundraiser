@@ -288,13 +288,16 @@ movie_frame = pandas.DataFrame(movie_data_dict)
 movie_frame = movie_frame.set_index('Name')
 #
 # Create "Sub Total" column, fill with ticket and snack pricing
-movie_frame["Sub Total"] = \
-    movie_frame["Ticket"] + \
+movie_frame["Snacks"] = \
     movie_frame["Popcorn"] * price_dict["Popcorn"] + \
     movie_frame["Water"] * price_dict["Water"] + \
     movie_frame["Pita Chips"] * price_dict["Pita Chips"] + \
     movie_frame["M&Ms"] * price_dict["M&Ms"] + \
     movie_frame["Orange Juice"] * price_dict["Orange Juice"]
+
+movie_frame["Sub Total"] = \
+    movie_frame["Ticket"] + \
+    movie_frame["Snacks"]
 
 movie_frame["Surcharge"] = \
     movie_frame["Sub Total"] * movie_frame["Surcharge Multi"]
@@ -314,7 +317,7 @@ print_all = input("Print all columns? (y) for yes: ")
 if print_all == "y":
     print(movie_frame)
 else:
-    print(movie_frame[['Ticket', 'Sub Total', 'Surcharge', 'Total']])
+    print(movie_frame[['Ticket', 'Snacks', 'Sub Total', 'Surcharge', 'Total']])
 
 print()
 
