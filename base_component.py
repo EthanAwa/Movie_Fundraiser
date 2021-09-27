@@ -138,12 +138,16 @@ def get_ticket_price():
     return ticket_cost
 
 
+# Format currency for .csv
+def currency(x):
+    return "${:.2f}".format(x)
+
+
 # Variables
 name = ""
 tickets_sold = 0
 ticket_price = 0
 ticket_sales = 0
-profit = 0.0
 max_tickets = 5  # Will be 150 for final version
 loop = True
 snack_order = []
@@ -161,6 +165,11 @@ orange_juice = []
 surcharge = []
 
 snack_lists = [popcorn, mms, pita_chips, water, orange_juice]
+
+summary_headings = ["Popcorn", "M&Ms", "Pita Chips",
+                    "Water", "Orange Juice", "Snack Profit",
+                    "Ticket Profit", "Total Profit"]
+summary_data = []
 
 # Data Frame Dictionary
 movie_data_dict = {
@@ -180,6 +189,12 @@ price_dict = {
     "Pita Chips": 4.5,
     "M&Ms": 3,
     "Orange Juice": 3.25
+}
+
+# Summary Dictionary
+summary_data_dict = {
+    'Item': summary_headings,
+    'Amount': summary_data
 }
 
 # List for valid yes/no responses
@@ -308,22 +323,51 @@ movie_frame["Total"] = movie_frame["Sub Total"] + \
 movie_frame = movie_frame.rename(columns={'Orange Juice': "OJ",
                                           'Pita Chips': "Chips"})
 
+# Set up summary dataframe
+# Populate snack items
+for item in snack_lists:
+    # Sum items in each snack list
+    summary_data.append(sum(item))
+
+# Get snack profit via pandas
+snack_total = movie_frame['Snacks'].sum()
+snack_profit = snack_total * 0.2
+
+# Get ticket profit and total profit
+ticket_profit = ticket_sales - (5 * tickets_sold)
+total_profit = ticket_profit + snack_profit
+
+# Format dollar amount and add to list
+dollar_amounts = [snack_profit, ticket_profit, total_profit]
+for item in dollar_amounts:
+    item = "${:.2f}".format(item)
+    summary_data.append(item)
+
+# Create summary frame
+summary_frame = pandas.DataFrame(summary_data_dict)
+summary_frame = summary_frame.set_index('Item')
+
 # Change pandas settings
 pandas.set_option('display.max_columns', None)
-pandas.set_option('precision', 2)
 
-# Ask user if they wish to see extra info
-print_all = input("Print all columns? (y) for yes: ")
-if print_all == "y":
-    print(movie_frame)
-else:
-    print(movie_frame[['Ticket', 'Snacks', 'Sub Total', 'Surcharge', 'Total']])
+# Setup for printing/exporting
+# Ticket detail formatting (uses currency function)
+add_dollars = ['Ticket', 'Snacks', 'Sub Total', 'Surcharge', 'Total']
+for item in add_dollars:
+    movie_frame[item] = movie_frame[item].apply(currency)
 
+# Export to .csv
+movie_frame.to_csv("ticket_details.csv")
+summary_frame.to_csv('snack_summary.csv')
+
+print("Ticket and Snack information")
+print("Note: for full details, please check the excel spreadsheet")
 print()
+print(movie_frame[['Ticket', 'Snacks', 'Sub Total', 'Surcharge', 'Total']])
 
-# Calculate ticket profit
-profit = ticket_sales - (5 * tickets_sold)
-print("Ticket profit: ${:.2f}".format(profit))
+print("Snack and Profit Summary")
+print()
+print(summary_frame)
 
 # Tell user if all tickets have been sold
 if tickets_sold == max_tickets:
