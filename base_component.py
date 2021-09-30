@@ -161,7 +161,8 @@ def instructions(choice):
               "type quit or q to stop ordering")
         print("4. Then, choose whether to pay with cash or credit. There is a 5% surcharge fee when paying with "
               "credit, as to not annoy the banks.")
-        print("5. To end the program at any time, type quit or q when you get asked your name.")
+        print("To end the program at any time, type quit or q when you get asked your name.")
+        print("A summary of all ticket information and profits will be printed at the end.")
 
 
 # Variables
@@ -169,7 +170,7 @@ name = ""
 tickets_sold = 0
 ticket_price = 0
 ticket_sales = 0
-max_tickets = 5  # Will be 150 for final version
+max_tickets = 150  # Will be 150 for final version
 loop = True
 snack_order = []
 count = 0
